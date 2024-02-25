@@ -15,7 +15,7 @@ public class Arrays {
         this.matriz = null;
     }
 
-    public void Matriz() {
+    public void carregarMatriz() {
         try {
             BufferedReader texto = new BufferedReader(new FileReader("matriz.txt"));
 
@@ -52,17 +52,23 @@ public class Arrays {
                 }
                 System.out.println();
             }
-            gravarFicheiro(this.rows, this.cols); 
+            gravarMatrizParaArquivo("matriz.txt"); 
         } else {
             System.out.println("Matriz não foi inicializada.");
-            gravarFicheiro(this.rows, this.cols); 
         }
     }
 
-    public void gravarFicheiro(int rows, int cols) {
+    public void gravarMatrizParaArquivo(String filename) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("matriz.txt"));
-            writer.write(rows + " " + cols);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write(this.rows + " " + this.cols);
+            writer.newLine();
+            for (int i = 0; i < this.rows; i++) {
+                for (int j = 0; j < this.cols; j++) {
+                    writer.write(this.matriz[i][j] + " ");
+                }
+                writer.newLine();
+            }
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +77,7 @@ public class Arrays {
 
     public static void main(String[] args) {
         Arrays teste = new Arrays();
-        teste.Matriz();
+        teste.carregarMatriz();
         teste.imprimirMatriz();
     }
 }
